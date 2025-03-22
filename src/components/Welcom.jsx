@@ -9,7 +9,7 @@ function BasicAlert() {
        
       ].map((variant) => (
         <Alert key={variant} variant={variant}>
-         EpikBook!
+         <h1>Benvenuti in EpiBooks!</h1>
         </Alert>
       ))}
     </>

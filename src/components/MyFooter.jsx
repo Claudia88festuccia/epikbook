@@ -1,18 +1,10 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 
-function FooterContainer() {
-  return (
-    <Container>
-      <Row>
-        <Card.Footer >
-        <Col>sono il footer</Col>
-        </Card.Footer>
-      </Row>
-    </Container>
-  );
-}
+const FooterContainer = () => (
+  <footer className="d-flex bg-dark mt-2">
+    <span className="text-white m-auto p-2">
+      <strong>EpicBook</strong> - Copyright {new Date().getFullYear()}
+    </span>
+  </footer>
+)
 
-export default FooterContainer;
+export default FooterContainer
