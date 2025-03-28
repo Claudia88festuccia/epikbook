@@ -5,14 +5,14 @@
 import React from 'react';
 import SingleComment from './SingleComment';
 
+
 function CommentList({ comments, refreshComments }) {
   return (
     <div>
-      {comments.map((comment) => (
-        <SingleComment key={comment._id} comment={comment} refreshComments={refreshComments} />
-      ))}
-    </div>
-  );
+    {comments.map((comment) => (
+      <SingleComment key={comment._id} comment={comment} refreshComments={refreshComments} />
+    ))}
+  </div>
+);
 }
-
 export default CommentList;

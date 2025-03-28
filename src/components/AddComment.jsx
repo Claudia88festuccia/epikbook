@@ -6,42 +6,39 @@
 
 import React, { useState } from 'react';
 
+
 function AddComment({ asin, refreshComments }) {
-  const [commentText, setCommentText] = useState('');
-  const [rating, setRating] = useState(1);
+  const [comment, setComment] = useState('');
+  const [rate, setRate] = useState(1);
   
-  const submitComment = (e) => {
-    e.preventDefault();
-    
-    fetch("https://striveschool-api.herokuapp.com/api/comments", {
-      method: "POST",
+  
+  const submitComment = () => {
+    fetch('https://striveschool-api.herokuapp.com/api/comments/', {
+      method: 'POST',
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkYmNmZDM4MzRiZjAwMTUwMDBhNWYiLCJpYXQiOjE3NDI1ODUwODUsImV4cCI6MTc0Mzc5NDY4NX0.hvzD-aoHTdHKjeP6dUDWO-eAy5Yp-2zt9SfMP5BqSRI"
       },
-      body: JSON.stringify({
-        comment: commentText,
-        rate: rating,
-        elementId: asin
-      })
-    }).then(() => {
-      setCommentText('');
-      setRating(1);
+      body: JSON.stringify({ comment, rate, elementId: asin })
+    })
+    .then(() => {
+      setComment('');
+      setRate(1);
       refreshComments();
     });
   };
-  
+
   return (
-    <form onSubmit={submitComment}>
-      <input type="text" value={commentText} onChange={(e) => setCommentText(e.target.value)} placeholder="Write a comment" />
-      <select value={rating} onChange={(e) => setRating(e.target.value)}>
+    <div>
+      <h5>Aggiungi un commento</h5>
+      <textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Scrivi un commento..." />
+      <select value={rate} onChange={(e) => setRate(e.target.value)}>
         {[1, 2, 3, 4, 5].map((num) => (
           <option key={num} value={num}>{num}</option>
         ))}
       </select>
-      <button type="submit">Add Comment</button>
-    </form>
+      <button onClick={submitComment}>Invia</button>
+    </div>
   );
 }
-
 export default AddComment;

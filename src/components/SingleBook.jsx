@@ -5,30 +5,25 @@
 
 
 import Card from 'react-bootstrap/Card';
-import React, { useState } from 'react';
-import CommentArea from './CommentArea';
+import React from 'react';
 
-function SingleBook({ book }) {
-  const [selected, setSelected] = useState(false);
 
+function SingleBook({ book, selected, setSelected }) {
   return (
-    <>
-    <Card 
-      style={{ 
-        width: '18rem', 
-        border: selected ? '3px solid red' : 'none',
-        cursor: 'pointer' 
+    <Card
+      style={{
+        width: '18rem',
+        border: selected === book.asin ? '3px solid red' : 'none',
+        cursor: 'pointer',
       }}
-      onClick={() => setSelected(!selected)}
+      onClick={() => setSelected(book.asin)} //  Imposta l'ASIN come selected
     >
       <Card.Img variant="top" src={book.img} alt={book.title} />
       <Card.Body>
         <Card.Title>{book.title}</Card.Title>
-        <Card.Text>{book.price} € {book.category}</Card.Text>
+        <Card.Text>{book.price} € - {book.category}</Card.Text>
       </Card.Body>
     </Card>
-    {selected && <CommentArea asin={book.asin} />}
-    </>
   );
 }
 

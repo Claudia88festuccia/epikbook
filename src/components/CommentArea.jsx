@@ -23,36 +23,43 @@ import Spinner from 'react-bootstrap/Spinner';
 
 function CommentArea({ asin }) {
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!asin) {
+      setComments([]); // Se nessun libro è selezionato, svuotiamo i commenti
+      return;
+    }
+
+    setLoading(true);
+
     fetch(`https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`, {
       headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkYmNmZDM4MzRiZjAwMTUwMDBhNWYiLCJpYXQiOjE3NDI1ODUwODUsImV4cCI6MTc0Mzc5NDY4NX0.hvzD-aoHTdHKjeP6dUDWO-eAy5Yp-2zt9SfMP5BqSRI" }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setComments(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [asin]);
+    .then((response) => response.json())
+    .then((data) => {
+      setComments(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      setError(err.message);
+      setLoading(false);
+    });
+}, [asin]);
 
   return (
     <div>
-      {loading && <Spinner animation="border" />}
-      {error && <p>Error: {error}</p>}
-      {!loading && !error && (
-        <>
-          <CommentList comments={comments} refreshComments={() => setComments([])} />
-          <AddComment asin={asin} refreshComments={() => setComments([])} />
-        </>
-      )}
-    </div>
-  );
+    {loading && <Spinner animation="border" />}
+    {error && <p>Error: {error}</p>}
+    {!loading && !error && (
+      <>
+        <CommentList comments={comments} refreshComments={() => setComments([])} />
+        <AddComment asin={asin} refreshComments={() => setComments([])} />
+      </>
+    )}
+  </div>
+);
 }
 
 export default CommentArea;
