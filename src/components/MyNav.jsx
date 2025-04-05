@@ -1,9 +1,10 @@
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useContext } from 'react';
+import React,{ useContext } from 'react';
 import { FilterContext, ThemeContext } from './context';
 
 function NavContainer() {
@@ -17,7 +18,7 @@ function NavContainer() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#about">About</Nav.Link>
             <Nav.Link href="#browse">Browse</Nav.Link>
             <InputGroup size="sm" className="mb-3">

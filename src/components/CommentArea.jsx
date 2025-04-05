@@ -11,7 +11,7 @@
 // Ciò significa che puoi effettuare operazioni di GET, DELETE, POST e PUT.
 // fetch("https://striveschool-api.herokuapp.com/api/put-your-endpoint-here/", {
 //   headers: {
-//   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkYmNmZDM4MzRiZjAwMTUwMDBhNWYiLCJpYXQiOjE3NDI1ODUwODUsImV4cCI6MTc0Mzc5NDY4NX0.hvzD-aoHTdHKjeP6dUDWO-eAy5Yp-2zt9SfMP5BqSRI"
+//   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2YxNjQxYjI2YTJlMjAwMTUwZmQxNzEiLCJpYXQiOjE3NDM4NzMzMjcsImV4cCI6MTc0NTA4MjkyN30.f9S80rT-sxUVV2LxoihkfSUeS4GsUCpwWIT-yNdv104"
 //   }
 //   })
 
@@ -35,7 +35,7 @@ function CommentArea({ asin }) {
     setLoading(true);
 
     fetch(`https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`, {
-      headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkYmNmZDM4MzRiZjAwMTUwMDBhNWYiLCJpYXQiOjE3NDI1ODUwODUsImV4cCI6MTc0Mzc5NDY4NX0.hvzD-aoHTdHKjeP6dUDWO-eAy5Yp-2zt9SfMP5BqSRI" }
+      headers: { "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2YxNjQxYjI2YTJlMjAwMTUwZmQxNzEiLCJpYXQiOjE3NDM4NzMzMjcsImV4cCI6MTc0NTA4MjkyN30.f9S80rT-sxUVV2LxoihkfSUeS4GsUCpwWIT-yNdv104" }
     })
     .then((response) => response.json())
     .then((data) => {
@@ -47,6 +47,23 @@ function CommentArea({ asin }) {
       setLoading(false);
     });
 }, [asin]);
+const refreshComments = () => {
+  setLoading(true);
+  fetch(`https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`, {
+    headers: {
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkYmNmZDM4MzRiZjAwMTUwMDBhNWYiLCJpYXQiOjE3NDI1ODUwODUsImV4cCI6MTc0Mzc5NDY4NX0.hvzD-aoHTdHKjeP6dUDWO-eAy5Yp-2zt9SfMP5BqSRI"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    setComments(data);
+    setLoading(false);
+  })
+  .catch(err => {
+    setError(err.message);
+    setLoading(false);
+  });
+};
 
   return (
     <div>
@@ -54,8 +71,8 @@ function CommentArea({ asin }) {
     {error && <p>Error: {error}</p>}
     {!loading && !error && (
       <>
-        <CommentList comments={comments} refreshComments={() => setComments([])} />
-        <AddComment asin={asin} refreshComments={() => setComments([])} />
+        <CommentList comments={comments} refreshComments={refreshComments} />
+        <AddComment asin={asin} refreshComments={refreshComments} />
       </>
     )}
   </div>
